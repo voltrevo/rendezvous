@@ -52,8 +52,8 @@ serve((req) => {
     const id = Date.now() + Math.random();
 
     kv.atomic()
-      .set([roomId, "messages", id], e.data, { expireIn: 3_000 })
-      .set([roomId, "lastUpdated"], id, { expireIn: 86_400_000 })
+      .set(["rooms", roomId, "messages", id], e.data, { expireIn: 3_000 })
+      .set(["rooms", roomId, "lastUpdated"], id, { expireIn: 86_400_000 })
       .commit();
   };
 
@@ -70,15 +70,15 @@ serve((req) => {
   (async () => {
     const deliveredIds = new Set<number>();
 
-    for await (const _bump of kv.watch([[roomId, "lastUpdated"]])) {
+    for await (const _bump of kv.watch([["rooms", roomId, "lastUpdated"]])) {
       if (closed) {
         return;
       }
 
       for await (
         const entry of kv.list({
-          prefix: [roomId, "messages"],
-          start: [roomId, "messages", Date.now() - 10_000],
+          prefix: ["rooms", roomId, "messages"],
+          start: ["rooms", roomId, "messages", Date.now() - 10_000],
         })
       ) {
         if (closed) {
