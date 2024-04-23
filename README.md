@@ -3,6 +3,8 @@
 A rendezvous server for [deno](https://deno.com/) (and
 [deno deploy](https://deno.com/deploy)).
 
+Deployed at `https://rendezvous.deno.dev`.
+
 ## About
 
 Sometimes, especially on the web, there is no direct/easy way for peers to

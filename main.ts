@@ -6,6 +6,10 @@ const kv = await Deno.openKv();
 serve((req) => {
   const url = new URL(req.url);
 
+  if (url.pathname === "/") {
+    return Response.redirect("https://github.com/voltrevo/rendezvous");
+  }
+
   const [leader, encodedRoomId, ...rest] = url.pathname.slice(1).split("/");
 
   if (
