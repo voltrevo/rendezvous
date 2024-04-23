@@ -85,7 +85,7 @@ serve((req) => {
           return;
         }
 
-        const [, , id] = entry.key;
+        const [, , , id] = entry.key;
 
         if (typeof id !== "number") {
           throw new Error("should be number");
